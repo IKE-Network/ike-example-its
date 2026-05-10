@@ -27,11 +27,12 @@ mvn verify -Dinvoker.test=NAME   # one case
 - Parent: `network.ike.platform:ike-parent` (from ike-platform) — gives
   this harness Java 25 build conventions, distributionManagement, and the
   same plugin matrix as the workspace it slots into.
-- IT-target version pins live under `it.*` properties (`it.ike-tooling.version`,
-  `it.ike-docs.version`, `it.ike-platform.version`) so they don't shadow the
-  inherited ike-parent properties that control build-time plugin resolution.
-  The `<filterProperties>` block renames them back to the unqualified form
-  for substitution into IT-case POMs.
+- IT-target version pins live as literals inside the maven-invoker-plugin's
+  `<filterProperties>` block, not as `<properties>` declarations. Maven 4's
+  consumer-POM flattener bakes `<properties>` values into released artifacts;
+  putting `1-SNAPSHOT` placeholders there causes the workspace
+  `ws:release-publish` preflight to refuse the release. Filter properties
+  are read by `maven-invoker-plugin` only and never reach the consumer POM.
 
 ## Prohibited Patterns
 

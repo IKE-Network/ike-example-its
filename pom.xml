@@ -67,24 +67,6 @@
         <url>https://github.com/IKE-Network/ike-example-its</url>
     </scm>
 
-    <properties>
-        <!-- Test-target versions for IT-case POM substitution.
-             Namespaced under `it.*` to avoid shadowing the inherited
-             ike-parent properties (ike-tooling.version,
-             ike-docs.version, ike-platform.version) that control
-             plugin resolution for this very POM. The
-             <filterProperties> below renames them back to the
-             unqualified form for substitution into IT-case POMs.
-
-             Each IT case exercises a known-stable slice of the
-             release matrix, independent of whatever version is
-             current in the IKE Network. Bump these when the
-             oldest-supported floor moves. -->
-        <it.ike-platform.version>1-SNAPSHOT</it.ike-platform.version>
-        <it.ike-docs.version>1-SNAPSHOT</it.ike-docs.version>
-        <it.ike-tooling.version>126</it.ike-tooling.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -96,10 +78,19 @@
                     <settingsFile>src/it/settings.xml</settingsFile>
                     <postBuildHookScript>verify</postBuildHookScript>
                     <streamLogs>true</streamLogs>
+                    <!-- Filter properties forwarded to IT-case POM
+                         templates. Literal values are inlined here
+                         rather than declared in <properties> so that
+                         Maven 4's consumer-POM flattener cannot bake
+                         SNAPSHOT placeholders into the released
+                         artifact (the ws:release-publish preflight
+                         catches that leak). Bump these explicitly
+                         when the IT cases need to exercise a newer
+                         slice of the release matrix. -->
                     <filterProperties>
-                        <ike-platform.version>${it.ike-platform.version}</ike-platform.version>
-                        <ike-docs.version>${it.ike-docs.version}</ike-docs.version>
-                        <ike-tooling.version>${it.ike-tooling.version}</ike-tooling.version>
+                        <ike-platform.version>34</ike-platform.version>
+                        <ike-docs.version>12</ike-docs.version>
+                        <ike-tooling.version>126</ike-tooling.version>
                     </filterProperties>
                 </configuration>
                 <executions>
