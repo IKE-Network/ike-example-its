@@ -33,3 +33,6 @@ Thumbs.db
 
 # ws:/ike: versions-upgrade plan file (transient)
 versions-upgrade-plan.yaml
+
+# ike:* goal reports
+ike꞉*.md
