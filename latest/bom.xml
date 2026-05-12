@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:b6ebffbb-b42a-3b15-9013-a92f8ff1790d" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:df4cef67-5a30-3c52-ba12-62bf1e21399a" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
     <lifecycles>
       <lifecycle>
@@ -27,11 +27,11 @@
         </component>
       </components>
     </tools>
-    <component type="library" bom-ref="pkg:maven/network.ike.examples/ike-example-its@10?type=pom">
+    <component type="library" bom-ref="pkg:maven/network.ike.examples/ike-example-its@11?type=pom">
       <publisher>IKE Network</publisher>
       <group>network.ike.examples</group>
       <name>ike-example-its</name>
-      <version>10</version>
+      <version>11</version>
       <description>End-to-end smoke tests that exercise the IKE Network release
         cascade as external consumers would. Each IT case clones the
         intended usage pattern (doc-only project, java + docs, BOM
@@ -43,7 +43,7 @@
           <id>Apache-2.0</id>
         </license>
       </licenses>
-      <purl>pkg:maven/network.ike.examples/ike-example-its@10?type=pom</purl>
+      <purl>pkg:maven/network.ike.examples/ike-example-its@11?type=pom</purl>
       <externalReferences>
         <reference type="website">
           <url>https://ike.network/ike-example-its/</url>
@@ -235,7 +235,7 @@
     </component>
   </components>
   <dependencies>
-    <dependency ref="pkg:maven/network.ike.examples/ike-example-its@10?type=pom">
+    <dependency ref="pkg:maven/network.ike.examples/ike-example-its@11?type=pom">
       <dependency ref="pkg:maven/network.ike.tooling/ike-build-standards@158?classifier=claude&amp;type=zip"/>
       <dependency ref="pkg:maven/network.ike.tooling/ike-build-standards@158?classifier=config&amp;type=zip"/>
       <dependency ref="pkg:maven/network.ike.tooling/ike-build-standards@158?classifier=scaffold&amp;type=zip"/>
