@@ -106,6 +106,29 @@ force a pull from Nexus (simulating a clean consumer), delete the
 relevant artifacts from `~/.m2/repository/network/ike/` before
 running.
 
+## Doc as Code + LLM-Friendly
+
+This project follows the IKE Network's doc-as-code philosophy:
+build conventions, documentation standards, and AI-assistant
+guidance live as versioned Markdown files in
+[`ike-build-standards`](https://github.com/IKE-Network/ike-tooling/tree/main/ike-build-standards#readme)
+and are unpacked into every consumer's `.claude/standards/` at
+the `validate` phase. When a developer — or Claude itself —
+opens this project, the agent reads those standards and applies
+them automatically; contributors don't have to memorize the
+conventions.
+
+The standards most directly relevant to an integration-test
+harness are
+[`TESTING.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/TESTING.md)
+(JUnit 5, AssertJ, `maven-invoker-plugin` for IT cases),
+[`IKE-MAVEN.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-MAVEN.md)
+(IKE-specific Maven conventions), and
+[`IKE-RELEASE.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-RELEASE.md)
+(release cascade, the workflow the ITs assert behavior against).
+See the
+[full inventory](https://github.com/IKE-Network/ike-tooling/tree/main/ike-build-standards#readme).
+
 ## Links
 
 - **Documentation:** [`https://ike.network/ike-example-its/`](https://ike.network/ike-example-its/)
@@ -114,6 +137,7 @@ running.
   [`ike-tooling`](https://ike.network/ike-tooling/) ·
   [`ike-docs`](https://ike.network/ike-docs/) ·
   [`ike-platform`](https://ike.network/ike-platform/)
+- **Build standards:** [`ike-build-standards`](https://ike.network/ike-tooling/ike-build-standards/)
 - **Issues:** [`IKE-Network/ike-issues`](https://github.com/IKE-Network/ike-issues) (cross-project tracker)
 - **Source:** [`IKE-Network/ike-example-its`](https://github.com/IKE-Network/ike-example-its)
 
