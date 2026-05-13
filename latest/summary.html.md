@@ -27,5 +27,5 @@ canonical_url: https://ike.network/ike-example-its/summary.html
 | --- | --- |
 | GroupId | network.ike.examples |
 | ArtifactId | ike-example-its |
-| Version | 17 |
+| Version | 18 |
 | Type | pom |
