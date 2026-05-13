@@ -22,20 +22,25 @@ POM never blocks the workspace release cascade).
 It plugs into `ike-example-ws` as an **optional** subproject:
 
 ```bash
-# Standalone:
+# Standalone (the repo clones as ike-example-its by default):
+git clone https://github.com/IKE-Network/ike-example-its.git
 cd ike-example-its
 mvn verify
 
-# As an ike-example-ws subproject (file-activated profile picks it
-# up automatically when the directory exists):
+# As an ike-example-ws subproject (cloned into ./its/, where the
+# workspace's file-activated `with-its` profile picks it up):
 cd ike-example-ws
+mvn ws:init                                        # or:
 git clone https://github.com/IKE-Network/ike-example-its.git its
-mvn ws:init    # or: mvn verify -pl its
+mvn verify -pl its
 ```
 
 When `its/` is present inside `ike-example-ws`, the workspace
 reactor walks it during full builds. When it's absent, the
-workspace reactor skips it cleanly.
+workspace reactor skips it cleanly. The repo's local directory
+name `its` (not `ike-example-its`) preserves operator muscle
+memory from the pre-#343 layout when the harness lived inside
+`ike-example-ws`.
 
 ## What each IT must assert
 
@@ -56,7 +61,12 @@ workspace reactor skips it cleanly.
 
 ## Test inventory
 
-### Authored
+The harness is currently **structural-only**: `maven-invoker-plugin`
+is configured in `pom.xml` and `src/it/settings.xml` is in place,
+but no IT cases have been authored yet. The tables below are
+authored backlog and "would-have-been-caught" lists.
+
+### Authored backlog (planned)
 
 | IT | Purpose |
 |---|---|
@@ -65,14 +75,19 @@ workspace reactor skips it cleanly.
 | `src/it/bom-import/` | Consumer that imports `network.ike.platform:ike-bom` via `<scope>import</scope>` but does not inherit `ike-parent`. Asserts the BOM's managed dependency versions flatten correctly at consumer build time. |
 | `src/it/workspace-create/` | Invokes `ws:create` from a scratch directory and asserts the generated workspace POM references `network.ike.platform:ike-parent` at the released version. |
 
-### "Would-have-been-caught" backlog
+### "Would-have-been-caught" list
+
+Cases worth adding as the cascade matures — each captures a real
+post-mortem regression class:
 
 | IT | Would have caught |
 |---|---|
 | `src/it/scaffold-extensions/` | `.mvn/extensions.xml` for `wagon-ssh-external` (#338) reaching external projects via `ike:scaffold-publish`. |
 | `src/it/built-with-classifier/` | Curated narrative pulled from the platform-wide `supplement.yaml` unpacked from `ike-build-standards:built-with:zip` (#340). |
 | `src/it/sbom-shape/` | `target/bom.json` validates against the CycloneDX 1.6 schema and contains expected components for a known-shape consumer (#333). |
-| `src/it/release-cascade/` | Full `ike-tooling → ike-docs → ike-platform → consumer` cascade in isolated local repos with synthetic versions. Catches inter-repo coordination bugs (the kind that hit v148/v149 and required intermediate fixes; the v150 workspace cascade also surfaced the parent-artifactId staging nesting in #342). |
+| `src/it/release-cascade/` | Full `ike-tooling → ike-docs → ike-platform → consumer` cascade in isolated local repos with synthetic versions. Catches inter-repo coordination bugs of the kind that surfaced in #358 (staging unwrap), #380 (site URL realignment), and #381 (publish logic missed projectId-container layer). |
+| `src/it/site-topology/` | Releases a multi-module consumer and asserts every subproject × {root, /N/, /latest/} URL on its gh-pages responds 200 — the missing-from-tree case #382 added to `verify-release-published`. |
+| `src/it/inheritance-enforcer/` | External consumer that inherits `ike-parent` without overriding `<distributionManagement><site>` — asserts the build FAILS at validate with the #383 enforcer message. |
 
 ## Running the ITs
 
