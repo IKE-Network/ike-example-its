@@ -110,18 +110,28 @@
                     <postBuildHookScript>verify</postBuildHookScript>
                     <streamLogs>true</streamLogs>
                     <!-- Filter properties forwarded to IT-case POM
-                         templates. Literal values are inlined here
-                         rather than declared in <properties> so that
-                         Maven 4's consumer-POM flattener cannot bake
-                         SNAPSHOT placeholders into the released
-                         artifact (the ws:release-publish preflight
-                         catches that leak). Bump these explicitly
-                         when the IT cases need to exercise a newer
-                         slice of the release matrix. -->
+                         templates. These track the foundation the
+                         <parent> pins, so a parent bump moves the IT
+                         matrix forward automatically (ike-issues#411):
+
+                           ike-tooling.version / ike-docs.version are
+                             inherited from the ike-platform reactor
+                             root through ike-parent — Maven resolves
+                             the ${...} references against the effective
+                             POM before maven-invoker-plugin reads this
+                             block, so the IT cases see concrete values.
+                           ike-platform.version is the parent's own
+                             version: ike-parent and the ike-platform
+                             reactor root release in lockstep, so
+                             ${project.parent.version} is the foundation
+                             version.
+
+                         To pin one IT run to a non-current slice,
+                         override a value here with a literal. -->
                     <filterProperties>
-                        <ike-platform.version>34</ike-platform.version>
-                        <ike-docs.version>12</ike-docs.version>
-                        <ike-tooling.version>126</ike-tooling.version>
+                        <ike-platform.version>${project.parent.version}</ike-platform.version>
+                        <ike-docs.version>${ike-docs.version}</ike-docs.version>
+                        <ike-tooling.version>${ike-tooling.version}</ike-tooling.version>
                     </filterProperties>
                 </configuration>
                 <executions>
