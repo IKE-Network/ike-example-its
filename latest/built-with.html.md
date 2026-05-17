@@ -1,12 +1,12 @@
 ---
-date_published: 2026-05-13
-date_modified: 2026-05-13
+date_published: 2026-05-16
+date_modified: 2026-05-16
 canonical_url: https://ike.network/ike-example-its/built-with.html
 ---
 
 # Built With
 
-Open-source software that `ike-example-its` 21 depends on, links against, ships within, or invokes at runtime.
+Open-source software that `ike-example-its` 22 depends on, links against, ships within, or invokes at runtime.
 
 Three layers of attribution ship with each release:
 
